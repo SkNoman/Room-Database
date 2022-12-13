@@ -3,8 +3,9 @@ package com.example.roomapp.repository
 import androidx.lifecycle.LiveData
 import com.example.roomapp.data.UserDao
 import com.example.roomapp.model.User
+import javax.inject.Inject
 
-class UserRepository(private val userDao: UserDao) {
+class UserRepository (private val userDao: UserDao) {
 
     val readAllData: LiveData<List<User>> = userDao.readAllData()
 
