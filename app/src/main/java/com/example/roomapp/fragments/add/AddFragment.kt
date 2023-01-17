@@ -26,12 +26,12 @@ class AddFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentAddBinding.inflate(inflater,container,false)
         val view = binding.root
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        binding.addBtn.setText(requireArguments().getString("text"))
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        binding.addBtn.text = requireArguments().getString("text")
         binding.addBtn.setOnClickListener {
             insertDataToDatabase()
         }
