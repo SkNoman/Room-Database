@@ -3,11 +3,9 @@ package com.example.roomapp.repository
 import androidx.lifecycle.LiveData
 import com.example.roomapp.data.UserDao
 import com.example.roomapp.model.User
-import com.example.roomapp.network.ApiInterface
 import javax.inject.Inject
 
-
-class UserRepository @Inject constructor(private val userDao: UserDao, private val api:ApiInterface) {
+class UserRepository (private val userDao: UserDao) {
 
     val readAllData: LiveData<List<User>> = userDao.readAllData()
 
@@ -26,7 +24,5 @@ class UserRepository @Inject constructor(private val userDao: UserDao, private v
     suspend fun deleteAllUsers(){
         userDao.deleteAllUsers()
     }
-
-
 
 }
