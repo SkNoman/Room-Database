@@ -3,8 +3,6 @@ package com.example.roomapp.fragments.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roomapp.R
 import com.example.roomapp.model.University
@@ -15,7 +13,14 @@ class UniListAdapter: RecyclerView.Adapter<UniListAdapter.MyUniViewHolder>() {
     private lateinit var onClickUni: OnClick
 
     class MyUniViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
+       fun bindItem(currentItem: University, onClickUni: OnClick){
+           itemView.id_txt.text = currentItem.uni_id.toString()
+           itemView.firstName_txt.text = currentItem.uni_name
+           itemView.lastName_txt.text = currentItem.uni_estd
+           itemView.setOnClickListener{
+               onClickUni.onClickUni(currentItem.id)
+           }
+       }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyUniViewHolder {
@@ -25,12 +30,7 @@ class UniListAdapter: RecyclerView.Adapter<UniListAdapter.MyUniViewHolder>() {
 
     override fun onBindViewHolder(holder: MyUniViewHolder, position: Int) {
         val currentItem = this.uniList[position]
-        holder.itemView.id_txt.text = currentItem.uni_id.toString()
-        holder.itemView.firstName_txt.text = currentItem.uni_name
-        holder.itemView.lastName_txt.text = currentItem.uni_estd
-        holder.itemView.setOnClickListener{
-            onClickUni.onClickUni(currentItem.id)
-        }
+        holder.bindItem(currentItem,onClickUni)
     }
 
     override fun getItemCount(): Int {
