@@ -50,15 +50,12 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClick {
 
     override fun onClickUni(id: Int) {
         Toast.makeText(requireContext(),"Clicked: $id",Toast.LENGTH_SHORT).show()
-        val updatedUniversity = University(id,101,"Ahsanullah University",
-            "1998",true)
-        uniViewModel.updateUniversity(updatedUniversity)
-      /*  for (i in uniList.indices){
+        for (i in uniList.indices){
             if (uniList[i].id == id){
                 val updatedUniList = uniList[i]
                 Toast.makeText(requireContext(),updatedUniList.uni_name,Toast.LENGTH_SHORT).show()
             }
-        }*/
+        }
 
     }
 }

@@ -3,10 +3,12 @@ package com.example.roomapp.fragments.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roomapp.R
 import com.example.roomapp.model.University
 import kotlinx.android.synthetic.main.custom_row.view.*
+import kotlinx.android.synthetic.main.layout_uni_list.view.*
 
 class UniListAdapter: RecyclerView.Adapter<UniListAdapter.MyUniViewHolder>() {
     private var uniList = emptyList<University>()
@@ -14,9 +16,10 @@ class UniListAdapter: RecyclerView.Adapter<UniListAdapter.MyUniViewHolder>() {
 
     class MyUniViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
        fun bindItem(currentItem: University, onClickUni: OnClick){
-           itemView.id_txt.text = currentItem.uni_id.toString()
-           itemView.firstName_txt.text = currentItem.uni_name
-           itemView.lastName_txt.text = currentItem.uni_estd
+           itemView.uniId.text = currentItem.uni_id.toString()
+           itemView.uniName.text = currentItem.uni_name
+           "Since: ${currentItem.uni_estd}".also { itemView.uniESTD.text = it}
+           "Is Gov Approved: ${currentItem.uni_isGovApproved}".also { itemView.isGovApproved.text = it }
            itemView.setOnClickListener{
                onClickUni.onClickUni(currentItem.id)
            }
@@ -25,7 +28,7 @@ class UniListAdapter: RecyclerView.Adapter<UniListAdapter.MyUniViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyUniViewHolder {
         return MyUniViewHolder(LayoutInflater.from(parent.context).inflate
-            (R.layout.custom_row, parent, false))
+            (R.layout.layout_uni_list, parent, false))
     }
 
     override fun onBindViewHolder(holder: MyUniViewHolder, position: Int) {
