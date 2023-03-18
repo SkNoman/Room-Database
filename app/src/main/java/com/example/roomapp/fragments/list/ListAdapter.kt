@@ -37,6 +37,6 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     fun setData(user: List<User>){
         this.userList = user
-        notifyDataSetChanged()
+        notifyItemChanged(user.size)
     }
 }

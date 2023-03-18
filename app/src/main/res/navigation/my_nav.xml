@@ -49,5 +49,22 @@
         <action
             android:id="@+id/action_login_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_login_to_addUniversityFragment"
+            app:destination="@id/addUniversityFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addUniversityFragment"
+        android:name="com.example.roomapp.fragments.add.AddUniversityFragment"
+        android:label="fragment_add_university"
+        tools:layout="@layout/fragment_add_university" >
+        <action
+            android:id="@+id/action_addUniversityFragment_to_universityListFragment"
+            app:destination="@id/universityListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/universityListFragment"
+        android:name="com.example.roomapp.fragments.list.UniversityListFragment"
+        android:label="fragment_university_list"
+        tools:layout="@layout/fragment_university_list" />
 </navigation>
