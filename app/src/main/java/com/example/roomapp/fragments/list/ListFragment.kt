@@ -6,14 +6,11 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomapp.R
 import com.example.roomapp.databinding.FragmentListBinding
-import com.example.roomapp.fragments.login
 import com.example.roomapp.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
@@ -37,9 +34,9 @@ class ListFragment : Fragment() {
 
         // UserViewModel
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
+        mUserViewModel.readAllData.observe(viewLifecycleOwner) { user ->
             adapter.setData(user)
-        })
+        }
 
         view.floatingActionButton.setOnClickListener {
             val text = "Add"

@@ -39,36 +39,37 @@ class login : Fragment() {
             exeLogin(username,password)
         })
 
+        binding.btnUniversity.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.action_login_to_addUniversityFragment)
+        }
+
 
         return view
     }
 
     private fun exeLogin(username: String,password:String) {
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        mUserViewModel.readAllData.observe(viewLifecycleOwner) { user ->
 
             var flag = 1
-            for(i in user.indices)
-            {
-                if (user[i].lastName == username && user[i].age.toString() == password)
-                {
+            for (i in user.indices) {
+                if (user[i].lastName == username && user[i].age.toString() == password) {
+                    binding.etUsername.text = null
+                    binding.etPassword.text = null
                     findNavController().navigate(R.id.action_login_to_listFragment)
-                    Toast.makeText(requireContext(),"Login Success",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Login Success", Toast.LENGTH_SHORT).show()
                     flag = 1
                     break
-                }
-                else
-                {
+                } else {
                     flag = 0
                 }
             }
-            if (flag==0)
-            {
-                Toast.makeText(requireContext(),"Wrong Credentials",Toast.LENGTH_SHORT).show()
+            if (flag == 0) {
+                Toast.makeText(requireContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show()
             }
 
 
-        })
+        }
 
     }
 
