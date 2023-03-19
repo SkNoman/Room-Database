@@ -7,27 +7,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomapp.R
 import com.example.roomapp.databinding.FragmentUniversityListBinding
 import com.example.roomapp.fragments.adapters.UniListAdapter
+import com.example.roomapp.fragments.dialogs.UniversityDialog
+import com.example.roomapp.fragments.interfaces.OnDialogBtnClickListener
 import com.example.roomapp.model.University
 import com.example.roomapp.viewmodel.UniViewModel
-import kotlinx.android.synthetic.main.fragment_list.view.*
 
 
-class UniversityListFragment : Fragment(),UniListAdapter.OnClick {
+class UniversityListFragment : Fragment(),UniListAdapter.OnClick,OnDialogBtnClickListener{
     private lateinit var binding: FragmentUniversityListBinding
     private lateinit var uniViewModel: UniViewModel
     private var uniList = mutableListOf<University>()
+    lateinit var dialog: DialogFragment
+    private var TAG = "nlog_university_fragment"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentUniversityListBinding.inflate(inflater,container,false)
+        binding = FragmentUniversityListBinding.inflate(inflater, container, false)
 
         uniViewModel = ViewModelProvider(this)[UniViewModel::class.java]
         val adapter = UniListAdapter()
@@ -36,20 +40,29 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClick {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         try {
             uniViewModel.readAllUniversity.observe(viewLifecycleOwner) {
-                Log.e("nlogdata",it.toString())
+                Log.e(TAG, it.toString())
                 uniList = it.toMutableList()
-                adapter.setUniversity(it,this)
+                adapter.setUniversity(it, this)
             }
-        }catch (e:Exception){
-            Log.e("nloge",e.toString())
+        } catch (e: Exception) {
+            Log.e(TAG, e.toString())
         }
 
-        val view = binding.root
-        return view
+        binding.btmAddUniversity.setOnClickListener {
+            showUniversityDialog()
+        }
+
+        return binding.root
+    }
+
+    private fun showUniversityDialog() {
+        dialog = UniversityDialog(this,"1")
+        dialog.show(childFragmentManager,"uniDialog")
+        dialog.isCancelable = true
     }
 
     override fun onClickUni(id: Int) {
-        Toast.makeText(requireContext(),"Clicked: $id",Toast.LENGTH_SHORT).show()
+
         for (i in uniList.indices){
             if (uniList[i].id == id){
                 val updatedUniList = uniList[i]
@@ -57,5 +70,17 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClick {
             }
         }
 
+    }
+
+    override fun onBtnClick(uniId:String,uniName:String,uniSince:String,isUniGovApproved:Boolean) {
+        val university = University(
+            0,
+            Integer.parseInt(uniId),
+            uniName,
+            uniSince,
+            isUniGovApproved
+        )
+        uniViewModel.addUniversity(university)
+        Toast.makeText(requireContext(),"University Added Successfully",Toast.LENGTH_LONG).show()
     }
 }

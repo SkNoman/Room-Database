@@ -20,13 +20,13 @@ class AddUniversityFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAddUniversityBinding.inflate(inflater,container,false)
         val view = binding.root
         uniViewModel = ViewModelProvider(this).get(UniViewModel::class.java)
-        binding.btnSubmit.setOnClickListener {
-            insertUniversityData()
-        }
+//        binding.btnSubmit.setOnClickListener {
+//            insertUniversityData()
+//        }
         binding.btnViewUniversity.setOnClickListener{
             Navigation.findNavController(view).navigate(R.id.action_addUniversityFragment_to_universityListFragment)
         }
@@ -34,19 +34,19 @@ class AddUniversityFragment : Fragment() {
     }
 
     private fun insertUniversityData() {
-        var isGovApproved = false
-        if (binding.isGovApproved.isChecked){
-            isGovApproved = true
-        }
-
-        val university = University(
-            0,
-            Integer.parseInt(binding.etUniId.text.toString()),
-            binding.etUniName.text.toString(),
-            binding.etUniESTD.text.toString(),
-            isGovApproved
-        )
-        uniViewModel.addUniversity(university)
-        Toast.makeText(requireContext(),"University Added Successfully",Toast.LENGTH_LONG).show()
+//        var isGovApproved = false
+//        if (binding.isGovApproved.isChecked){
+//            isGovApproved = true
+//        }
+//
+//        val university = University(
+//            0,
+//            Integer.parseInt(binding.etUniId.text.toString()),
+//            binding.etUniName.text.toString(),
+//            binding.etUniESTD.text.toString(),
+//            isGovApproved
+//        )
+//        uniViewModel.addUniversity(university)
+//        Toast.makeText(requireContext(),"University Added Successfully",Toast.LENGTH_LONG).show()
     }
 }

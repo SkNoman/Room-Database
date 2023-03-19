@@ -5,6 +5,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSurface">@color/offWhite</item>
     </style>
+
+    <style name="myCustomDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+
+        <item name="android:windowBackground">@color/offWhite</item>
+
+    </style>
+
+
+
 
 </resources>
