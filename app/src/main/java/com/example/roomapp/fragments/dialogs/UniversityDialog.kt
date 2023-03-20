@@ -21,11 +21,6 @@ class UniversityDialog(onBtnClickListener: OnDialogBtnClickListener,btnType: Int
     private var _btnType = btnType
     private var uniElements = university
     private var isGovApproved = false
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        dialog!!.window?.setBackgroundDrawableResource(R.drawable.bg_dialog_common);
-//        return inflater.inflate(R.layout.layout_university_dialog, container, false)
-//    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = LayoutUniversityDialogBinding.inflate(
             LayoutInflater.from(
@@ -37,7 +32,6 @@ class UniversityDialog(onBtnClickListener: OnDialogBtnClickListener,btnType: Int
         builder?.setView(binding!!.root)
 
         //OPERATION
-
         when (_btnType) {
             1-> {
                 binding!!.apply {
@@ -96,7 +90,6 @@ class UniversityDialog(onBtnClickListener: OnDialogBtnClickListener,btnType: Int
             binding!!.isGovApprovedCheckbox.isChecked = uniElements!!.uni_isGovApproved.toString() == "true"
         }
 
-
         //return builder!!.create()
         // Set custom height and width for the dialog
         val dialog = builder!!.create()
@@ -106,11 +99,8 @@ class UniversityDialog(onBtnClickListener: OnDialogBtnClickListener,btnType: Int
             height = (resources.displayMetrics.heightPixels * 0.60).toInt() // set height to 500 pixels
         }
         dialog.window?.attributes = layoutParams
-
         return dialog
-//        val layoutParams = WindowManager.LayoutParams().apply {
-//            copyFrom(dialog.win)
-//        }
+
     }
 
     private fun checkInput(uniId: String, uniName: String, uniEst: String):Boolean {
@@ -127,12 +117,4 @@ class UniversityDialog(onBtnClickListener: OnDialogBtnClickListener,btnType: Int
           else -> true
       }
     }
-
-
-//    override fun onStart() {
-//        super.onStart()
-//        val width = (resources.displayMetrics.widthPixels * 0.85).toInt()
-//        val height = (resources.displayMetrics.heightPixels * 0.50).toInt()
-//        dialog!!.window?.setLayout(width,height)
-//    }
 }
