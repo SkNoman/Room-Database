@@ -3,25 +3,28 @@ package com.example.roomapp.fragments.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roomapp.R
 import com.example.roomapp.model.University
-import kotlinx.android.synthetic.main.custom_row.view.*
 import kotlinx.android.synthetic.main.layout_uni_list.view.*
 
 class UniListAdapter: RecyclerView.Adapter<UniListAdapter.MyUniViewHolder>() {
     private var uniList = emptyList<University>()
-    private lateinit var onClickUni: OnClick
+    private lateinit var onClickEditBtn: OnClickEditBtn
+    private lateinit var onClickDeleteBtn: OnClickDeleteBtn
 
     class MyUniViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-       fun bindItem(currentItem: University, onClickUni: OnClick){
+       fun bindItem(currentItem: University,onClickEditBtn: OnClickEditBtn, onClickDeleteBtn: OnClickDeleteBtn){
            itemView.uniId.text = currentItem.uni_id.toString()
            itemView.uniName.text = currentItem.uni_name
            "Since: ${currentItem.uni_estd}".also { itemView.uniESTD.text = it}
            "Is Gov Approved: ${currentItem.uni_isGovApproved}".also { itemView.isGovApproved.text = it }
-           itemView.setOnClickListener{
-               onClickUni.onClickUni(currentItem.id)
+
+           itemView.btnEditUni.setOnClickListener{
+               onClickEditBtn.onClickEditBtn(currentItem.id)
+           }
+           itemView.btnDeleteUni.setOnClickListener{
+               onClickDeleteBtn.onClickDeleteBtn(currentItem.id)
            }
        }
     }
@@ -33,20 +36,23 @@ class UniListAdapter: RecyclerView.Adapter<UniListAdapter.MyUniViewHolder>() {
 
     override fun onBindViewHolder(holder: MyUniViewHolder, position: Int) {
         val currentItem = this.uniList[position]
-        holder.bindItem(currentItem,onClickUni)
+        holder.bindItem(currentItem,onClickEditBtn,onClickDeleteBtn)
     }
 
     override fun getItemCount(): Int {
         return uniList.size
     }
 
-    fun setUniversity(uni: List<University>,onClickUni: OnClick){
+    fun setUniversity(uni: List<University>,onClickEdit: OnClickEditBtn,onClickDelete: OnClickDeleteBtn){
         this.uniList = uni
-        this.onClickUni = onClickUni
+        this.onClickEditBtn = onClickEdit
+        this.onClickDeleteBtn = onClickDelete
         notifyItemChanged(uni.size)
     }
-
-    interface OnClick{
-        fun onClickUni(id:Int)
+    interface OnClickEditBtn{
+        fun onClickEditBtn(id:Int)
+    }
+    interface OnClickDeleteBtn{
+        fun onClickDeleteBtn(id:Int)
     }
 }

@@ -1,5 +1,6 @@
 package com.example.roomapp.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.roomapp.data.UniversityDao
 import com.example.roomapp.model.University
@@ -13,5 +14,9 @@ class UniRepository(private val universityDao: UniversityDao) {
 
     suspend fun updateUniversity(university: University){
         universityDao.updateUniversity(university)
+    }
+
+    suspend fun deleteUniversity(university: University){
+        universityDao.deleteUniversity(university)
     }
 }

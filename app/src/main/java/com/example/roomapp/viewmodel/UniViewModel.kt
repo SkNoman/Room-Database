@@ -1,6 +1,7 @@
 package com.example.roomapp.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -28,6 +29,12 @@ class UniViewModel(application: Application): AndroidViewModel(application) {
     fun updateUniversity(university: University){
         viewModelScope.launch (Dispatchers.IO){
             repository.updateUniversity(university)
+        }
+    }
+
+    fun deleteUniversity(university: University){
+        viewModelScope.launch (Dispatchers.IO){
+            repository.deleteUniversity(university)
         }
     }
 }

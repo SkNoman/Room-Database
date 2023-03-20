@@ -9,4 +9,17 @@
     <string name="enter_university_id">Enter University ID</string>
     <string name="enter_university_name">Enter University Name</string>
     <string name="select_date_of_establishment">Select Date Of Establishment</string>
+    <string name="university_list_bangladesh">University List Bangladesh</string>
+    <string name="name_walton_hi_tech_university">Name: Walton Hi-Tech University</string>
+    <string name="since_2008">Since: 2008</string>
+    <string name="is_gov_approved_yes">Is Gov Approved: YES</string>
+    <string name="update">Update</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="university">University</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="not_registered_yet">Not Registered Yet?</string>
 </resources>

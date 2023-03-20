@@ -20,12 +20,13 @@ import com.example.roomapp.model.University
 import com.example.roomapp.viewmodel.UniViewModel
 
 
-class UniversityListFragment : Fragment(),UniListAdapter.OnClick,OnDialogBtnClickListener{
+class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListAdapter.OnClickDeleteBtn,OnDialogBtnClickListener{
     private lateinit var binding: FragmentUniversityListBinding
     private lateinit var uniViewModel: UniViewModel
     private var uniList = mutableListOf<University>()
     lateinit var dialog: DialogFragment
     private var TAG = "nlog_university_fragment"
+    var count = 0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +35,19 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClick,OnDialogBtnClic
         binding = FragmentUniversityListBinding.inflate(inflater, container, false)
 
         uniViewModel = ViewModelProvider(this)[UniViewModel::class.java]
+        showUniList()
+
+        binding.btnAddUniversity.setOnClickListener {
+            addUniversity()
+        }
+
+        return binding.root
+    }
+
+    private fun showUniList() {
+
+        count += 1
+        Log.e("nlog_f_count","Show Uni List Function Called: $count")
         val adapter = UniListAdapter()
         val recyclerView = binding.uniListRecyclerView
         recyclerView.adapter = adapter
@@ -42,45 +56,85 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClick,OnDialogBtnClic
             uniViewModel.readAllUniversity.observe(viewLifecycleOwner) {
                 Log.e(TAG, it.toString())
                 uniList = it.toMutableList()
-                adapter.setUniversity(it, this)
+                adapter.setUniversity(it, this,this)
+                adapter.notifyItemChanged(uniList.size)
             }
         } catch (e: Exception) {
             Log.e(TAG, e.toString())
         }
-
-        binding.btmAddUniversity.setOnClickListener {
-            showUniversityDialog()
-        }
-
-        return binding.root
     }
 
-    private fun showUniversityDialog() {
-        dialog = UniversityDialog(this,"1")
-        dialog.show(childFragmentManager,"uniDialog")
-        dialog.isCancelable = true
+    private fun addUniversity() {
+        dialog = UniversityDialog(this,1,null)
+        dialog.show(childFragmentManager,"uniAddDialog")
     }
 
-    override fun onClickUni(id: Int) {
 
-        for (i in uniList.indices){
-            if (uniList[i].id == id){
-                val updatedUniList = uniList[i]
-                Toast.makeText(requireContext(),updatedUniList.uni_name,Toast.LENGTH_SHORT).show()
-            }
-        }
 
-    }
-
-    override fun onBtnClick(uniId:String,uniName:String,uniSince:String,isUniGovApproved:Boolean) {
+    override fun onBtnClick(id:Int,uniId:String,uniName:String,uniSince:String,isUniGovApproved:Boolean,btnType:Int) {
         val university = University(
-            0,
+            id,
             Integer.parseInt(uniId),
             uniName,
             uniSince,
             isUniGovApproved
         )
-        uniViewModel.addUniversity(university)
-        Toast.makeText(requireContext(),"University Added Successfully",Toast.LENGTH_LONG).show()
+        when (btnType) {
+            1 -> {
+                try {
+                    uniViewModel.addUniversity(university)
+                    Toast.makeText(requireContext(),"University Added Successfully",Toast.LENGTH_LONG).show()
+                    dialog.dismiss()
+                }catch (e:Exception){
+                    Log.e(TAG,e.toString())
+                }
+
+            }
+            2 -> {
+                try {
+                    uniViewModel.updateUniversity(university)
+                    Toast.makeText(requireContext(),"University Updated Successfully",Toast.LENGTH_SHORT).show()
+                }catch (e:Exception){
+                    Log.e(TAG,e.toString())
+                }
+
+            }
+            else -> {
+                try {
+                    uniViewModel.deleteUniversity(university)
+                    Toast.makeText(requireContext()," ${university.uni_name} University Deleted",Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }catch (e:Exception){
+                    Log.e(TAG,e.toString())
+                }
+            }
+        }
+
+    }
+
+    override fun onCrossBtnClick() {
+        showUniList()
+        dialog.dismiss()
+    }
+
+    override fun onClickEditBtn(id: Int) {
+        for (i in uniList.indices){
+            if (uniList[i].id == id){
+                val updatedList = uniList[i]
+                dialog = UniversityDialog(this,2,updatedList)
+                dialog.show(childFragmentManager,"ForEdit")
+                dialog.isCancelable = false
+            }
+        }
+    }
+
+    override fun onClickDeleteBtn(id: Int) {
+        for (i in uniList.indices){
+            if (uniList[i].id == id){
+                val updatedList = uniList[i]
+                dialog = UniversityDialog(this,3,updatedList)
+                dialog.show(childFragmentManager,"ForDelete")
+            }
+        }
     }
 }

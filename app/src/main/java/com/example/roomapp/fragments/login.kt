@@ -22,25 +22,25 @@ class login : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View{
         binding = FragmentLoginBinding.inflate(inflater,container,false)
         val view = binding.root
-        binding.btnSignUp.setOnClickListener(View.OnClickListener {
+        binding.btnSignUp.setOnClickListener {
             val text = "Register"
             val bundle = Bundle()
-            bundle.putString("text",text)
+            bundle.putString("text", text)
             Navigation.findNavController(view).navigate(R.id.action_login_to_addFragment, bundle)
-        })
+        }
 
 
-        binding.btnLogin.setOnClickListener(View.OnClickListener {
+        binding.btnLogin.setOnClickListener {
             val username = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
-            exeLogin(username,password)
-        })
+            exeLogin(username, password)
+        }
 
         binding.btnUniversity.setOnClickListener{
-            Navigation.findNavController(view).navigate(R.id.action_login_to_addUniversityFragment)
+            findNavController().navigate(R.id.universityListFragment)
         }
 
 
