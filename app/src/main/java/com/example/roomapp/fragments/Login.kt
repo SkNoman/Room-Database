@@ -1,6 +1,7 @@
 package com.example.roomapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,14 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.roomapp.R
 import com.example.roomapp.databinding.FragmentLoginBinding
+import com.example.roomapp.model.UserResponse
+import com.example.roomapp.model.UserResponseItem
+import com.example.roomapp.modules.RetroInstance
+import com.example.roomapp.services.ApiService
 import com.example.roomapp.viewmodel.UserViewModel
+import retrofit2.Call
+import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 
 class Login : Fragment() {
@@ -24,6 +32,7 @@ class Login : Fragment() {
     ): View{
         binding = FragmentLoginBinding.inflate(inflater,container,false)
         val view = binding.root
+        getUserFromOnline()
         binding.btnSignUp.setOnClickListener {
             val text = "Register"
             val bundle = Bundle()
@@ -44,6 +53,20 @@ class Login : Fragment() {
 
 
         return view
+    }
+
+    private fun getUserFromOnline() {
+        RetroInstance.createService(ApiService::class.java).getUserFromOnline("users").enqueue(object :
+            retrofit2.Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+               Log.e("nlog_online_users",response.body().toString())
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                t.localizedMessage?.let { Log.e("nlog_online_users", it.toString()) }
+            }
+
+        })
     }
 
     private fun exeLogin(username: String,password:String) {

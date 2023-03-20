@@ -22,4 +22,8 @@
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="not_registered_yet">Not Registered Yet?</string>
+    <string name="_1">1</string>
+    <string name="john">John</string>
+    <string name="doe">Doe</string>
+    <string name="user_list">User List</string>
 </resources>
