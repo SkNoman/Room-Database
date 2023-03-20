@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.example.roomapp.fragments.login"
+        android:name="com.example.roomapp.fragments.Login"
         android:label="Room"
         tools:layout="@layout/fragment_login" >
         <action

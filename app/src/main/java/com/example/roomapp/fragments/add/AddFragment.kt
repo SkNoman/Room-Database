@@ -1,12 +1,9 @@
 package com.example.roomapp.fragments.add
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +13,6 @@ import com.example.roomapp.databinding.FragmentAddBinding
 import com.example.roomapp.model.User
 import com.example.roomapp.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
-import kotlinx.android.synthetic.main.fragment_add.view.*
 
 
 class AddFragment : Fragment() {
@@ -26,12 +22,12 @@ class AddFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentAddBinding.inflate(inflater,container,false)
         val view = binding.root
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        binding.addBtn.setText(requireArguments().getString("text"))
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        binding.addBtn.text = requireArguments().getString("text")
         binding.addBtn.setOnClickListener {
             insertDataToDatabase()
         }
@@ -42,15 +38,15 @@ class AddFragment : Fragment() {
     private fun insertDataToDatabase() {
         val firstName = addFirstName_et.text.toString()
         val lastName = addLastName_et.text.toString()
-        val age = addAge_et.text
+        val password = addAge_et.text.toString()
 
-        if(inputCheck(firstName, lastName, age)){
+        if(inputCheck(firstName, lastName, password)){
             // Create User Object
             val user = User(
                 0,
                 firstName,
                 lastName,
-                Integer.parseInt(age.toString())
+                Integer.parseInt(password)
             )
             // Add Data to Database
             mUserViewModel.addUser(user)
@@ -62,9 +58,20 @@ class AddFragment : Fragment() {
         }
     }
 
-    private fun inputCheck(firstName: String, lastName: String, age: Editable): Boolean
+    private fun inputCheck(firstName: String, lastName: String, password: String): Boolean
     {
-        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.isEmpty())
+        return when {
+            firstName.isEmpty() -> {
+                false
+            }
+            lastName.isEmpty() -> {
+                false
+            }
+            password.isEmpty() -> {
+                false
+            }
+            else -> true
+        }
     }
 
 }

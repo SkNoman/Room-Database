@@ -14,18 +14,19 @@ import com.example.roomapp.databinding.FragmentListBinding
 import com.example.roomapp.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
+@Suppress("DEPRECATION")
 class ListFragment : Fragment() {
-    private val TAG: String = "appDebug"
+    private val tAG: String = "appDebug"
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var binding:FragmentListBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentListBinding.inflate(inflater,container,false)
         val view = binding.root
-        Log.d(TAG, "onCreateView: ${"This is list fragment"}")
+        Log.d(tAG, "onCreateView: ${"This is list fragment"}")
         // Recyclerview
         val adapter = ListAdapter()
         val recyclerView = view.recyclerview
@@ -33,7 +34,7 @@ class ListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // UserViewModel
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mUserViewModel.readAllData.observe(viewLifecycleOwner) { user ->
             adapter.setData(user)
         }
@@ -51,7 +52,11 @@ class ListFragment : Fragment() {
         return view
     }
 
-    @Deprecated("Deprecated in Java")
+    @Deprecated("Deprecated in Java", ReplaceWith(
+        "inflater.inflate(R.menu.delete_menu, menu)",
+        "com.example.room-app.R"
+    )
+    )
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.delete_menu, menu)
     }

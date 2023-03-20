@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.roomapp.R
 import com.example.roomapp.databinding.FragmentUniversityListBinding
 import com.example.roomapp.fragments.adapters.UniListAdapter
 import com.example.roomapp.fragments.dialogs.UniversityDialog
@@ -24,9 +22,9 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListA
     private lateinit var binding: FragmentUniversityListBinding
     private lateinit var uniViewModel: UniViewModel
     private var uniList = mutableListOf<University>()
-    lateinit var dialog: DialogFragment
-    private var TAG = "nlog_university_fragment"
-    var count = 0
+    private lateinit var dialog: DialogFragment
+    private var tAG = "nlog_university_fragment"
+    private var count = 0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,13 +52,13 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListA
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         try {
             uniViewModel.readAllUniversity.observe(viewLifecycleOwner) {
-                Log.e(TAG, it.toString())
+                Log.e(tAG, it.toString())
                 uniList = it.toMutableList()
                 adapter.setUniversity(it, this,this)
                 adapter.notifyItemChanged(uniList.size)
             }
         } catch (e: Exception) {
-            Log.e(TAG, e.toString())
+            Log.e(tAG, e.toString())
         }
     }
 
@@ -86,7 +84,7 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListA
                     Toast.makeText(requireContext(),"University Added Successfully",Toast.LENGTH_LONG).show()
                     dialog.dismiss()
                 }catch (e:Exception){
-                    Log.e(TAG,e.toString())
+                    Log.e(tAG,e.toString())
                 }
 
             }
@@ -95,7 +93,7 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListA
                     uniViewModel.updateUniversity(university)
                     Toast.makeText(requireContext(),"University Updated Successfully",Toast.LENGTH_SHORT).show()
                 }catch (e:Exception){
-                    Log.e(TAG,e.toString())
+                    Log.e(tAG,e.toString())
                 }
 
             }
@@ -105,7 +103,7 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListA
                     Toast.makeText(requireContext()," ${university.uni_name} University Deleted",Toast.LENGTH_SHORT).show()
                     dialog.dismiss()
                 }catch (e:Exception){
-                    Log.e(TAG,e.toString())
+                    Log.e(tAG,e.toString())
                 }
             }
         }

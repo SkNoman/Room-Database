@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -15,7 +14,7 @@ import com.example.roomapp.databinding.FragmentLoginBinding
 import com.example.roomapp.viewmodel.UserViewModel
 
 
-class login : Fragment() {
+class Login : Fragment() {
 
     private lateinit var mUserViewModel:UserViewModel
     private lateinit var binding:FragmentLoginBinding
