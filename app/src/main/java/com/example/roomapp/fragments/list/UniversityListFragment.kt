@@ -1,7 +1,6 @@
 package com.example.roomapp.fragments.list
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +22,6 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListA
     private lateinit var uniViewModel: UniViewModel
     private var uniList = mutableListOf<University>()
     private lateinit var dialog: DialogFragment
-    private var tAG = "nlog_university_fragment"
     private var count = 0
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,20 +43,18 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListA
     private fun showUniList() {
 
         count += 1
-        Log.e("nlog_f_count","Show Uni List Function Called: $count")
         val adapter = UniListAdapter()
         val recyclerView = binding.uniListRecyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         try {
             uniViewModel.readAllUniversity.observe(viewLifecycleOwner) {
-                Log.e(tAG, it.toString())
                 uniList = it.toMutableList()
                 adapter.setUniversity(it, this,this)
                 adapter.notifyItemChanged(uniList.size)
             }
         } catch (e: Exception) {
-            Log.e(tAG, e.toString())
+            Toast.makeText(requireContext(),"Exception: $e",Toast.LENGTH_LONG).show()
         }
     }
 
@@ -84,7 +80,7 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListA
                     Toast.makeText(requireContext(),"University Added Successfully",Toast.LENGTH_LONG).show()
                     dialog.dismiss()
                 }catch (e:Exception){
-                    Log.e(tAG,e.toString())
+                    Toast.makeText(requireContext(),"Exception: $e",Toast.LENGTH_LONG).show()
                 }
 
             }
@@ -93,7 +89,7 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListA
                     uniViewModel.updateUniversity(university)
                     Toast.makeText(requireContext(),"University Updated Successfully",Toast.LENGTH_SHORT).show()
                 }catch (e:Exception){
-                    Log.e(tAG,e.toString())
+                    Toast.makeText(requireContext(),"Exception: $e",Toast.LENGTH_LONG).show()
                 }
 
             }
@@ -103,7 +99,7 @@ class UniversityListFragment : Fragment(),UniListAdapter.OnClickEditBtn,UniListA
                     Toast.makeText(requireContext()," ${university.uni_name} University Deleted",Toast.LENGTH_SHORT).show()
                     dialog.dismiss()
                 }catch (e:Exception){
-                    Log.e(tAG,e.toString())
+                    Toast.makeText(requireContext(),"Exception: $e",Toast.LENGTH_LONG).show()
                 }
             }
         }
