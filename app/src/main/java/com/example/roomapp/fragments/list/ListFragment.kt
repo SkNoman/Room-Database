@@ -2,7 +2,6 @@ package com.example.roomapp.fragments.list
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -11,12 +10,12 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomapp.R
 import com.example.roomapp.databinding.FragmentListBinding
+import com.example.roomapp.utils.MyLog
 import com.example.roomapp.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 @Suppress("DEPRECATION")
 class ListFragment : Fragment() {
-    private val tAG: String = "appDebug"
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var binding:FragmentListBinding
     override fun onCreateView(
@@ -26,7 +25,6 @@ class ListFragment : Fragment() {
 
         binding = FragmentListBinding.inflate(inflater,container,false)
         val view = binding.root
-        Log.d(tAG, "onCreateView: ${"This is list fragment"}")
         // Recyclerview
         val adapter = ListAdapter()
         val recyclerView = view.recyclerview

@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.roomapp.R
 import com.example.roomapp.databinding.FragmentLoginBinding
+import com.example.roomapp.utils.MyLog
 import com.example.roomapp.viewmodel.UserViewModel
 
 
